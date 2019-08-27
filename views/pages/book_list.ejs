@@ -31,21 +31,21 @@
                 </ul>
             </div>
             <div class="col-sm-10">
-              <h1><%= title %></h1>
-              <p>Welcome to <em>LocalLibrary</em>, a very basic Express website developed as a tutorial example on the Mozilla Developer Network.</p>
-              <h1>Dynamic content</h1>
-              <% if (error) { %>
-                <p>Error getting dynamic content.</p>
-              <% } else { %>
-                <p>The library has the following record counts:</p>
+                <h1><%= title %></h1>
+                <% if (book_list && book_list.length > 0) { %>
                 <ul>
-                    <li><strong>Books:</strong> <%= data && data.book_count %></li>
-                    <li><strong>Copies:</strong> <%= data && data.book_instance_count %></li>
-                    <li><strong>Copies available:</strong> <%= data && data.book_instance_available_count %></li>
-                    <li><strong>Authors:</strong> <%= data && data.author_count %></li>
-                    <li><strong>Genres:</strong> <%= data && data.genre_count %></li>
+                    <% book_list.forEach(function(book){ %>
+                        <li>
+                            <a href="<%= book.url %>" >
+                                # <%= book.title %>
+                            </a>
+                            | (<%= book.author.name %>)
+                        </li>
+                    <% }); %>
                 </ul>
-              <% } %>
+                <% } else { %>
+                    <p>There are no books.</p>
+                <% } %>
             </div>
         </div>
     </div>
