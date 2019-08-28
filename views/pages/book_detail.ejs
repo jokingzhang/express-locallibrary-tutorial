@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+                <ul class="sidebar-nav">
+                    <li> <a href="/catalog">Home</a></li>
+                    <li> <a href="/catalog/books">All books</a></li>
+                    <li> <a href="/catalog/authors">All authors</a></li>
+                    <li> <a href="/catalog/genres">All genres</a></li>
+                    <li> <a href="/catalog/bookinstances">All book-instances</a></li>
+                    <li>
+                        <hr>
+                    </li>
+                    <li> <a href="/catalog/author/create">Create new author</a></li>
+                    <li> <a href="/catalog/genre/create">Create new genre</a></li>
+                    <li> <a href="/catalog/book/create">Create new book</a></li>
+                    <li> <a href="/catalog/bookinstance/create">Create new book instance (copy)</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-10">
+                <h1><%= title %> : <%= book.title %></h1>
+                <p>
+                    <strong> Author: </strong>
+                    <a href="<%= book.author.url %>">
+                        <%= book.author.name %>
+                    </a>
+                </p>
+                <p>
+                    <strong> Summary: </strong>
+                    <%= book.summary %>
+                </p>
+                <p>
+                    <strong> ISBN: </strong>
+                    <%= book.isbn %>
+                </p>
+                <p>
+                    <strong> Genre: </strong>
+                    <% book.genre.forEach(function(val, index){ %>
+                        <a href="<%= val.url %>" >
+                            # <%= val.name %>
+                        </a>
+                        <% if (index < book.genre.length - 1) { %>
+                            |
+                        <% } %>
+                    <% }); %>
+                </p>
+
+                <div style='margin-left:20px;margin-top:20px'>
+                    <h4>Copies</h4>
+                    <% if (book_instances && book_instances.length > 0) { %>
+
+                    <% book_instances.forEach(function(val){ %>
+                        <hr />
+                        <% if (val.status === '可供借阅') {%>
+                            <p class="text-success">
+                                <%= val.status %>
+                            </p>
+                        <% } %>
+
+                        <% if (val.status === '馆藏维护') {%>
+                            <p class="text-danger">
+                                <%= val.status %>
+                            </p>
+                        <% } %>
+
+                        <% if (val.status === '已借出') {%>
+                            <p class="text-warning">
+                                <%= val.status %>
+                            </p>
+                        <% } %>
+
+                        <p>
+                            <strong>
+                                Imprint:
+                                <%= val.imprint %>
+                            </strong>
+                        </p>
+
+                        <% if (val.status !== '可供借阅') {%>
+                            <p>
+                                <strong>
+                                    Due back:
+                                    <%= val.due_back_formatted %>
+                                </strong>
+                            </p>
+                        <% } %>
+
+                        <p>
+                            <strong>
+                                Id:
+                                <a href="<%= val.url %>" >
+                                    <%= val._id %>
+                                </a>
+                            </strong>
+                        </p>
+                    <% }); %>
+                    <% } else { %>
+                        <p>There are no copies of this book in the library.</p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
