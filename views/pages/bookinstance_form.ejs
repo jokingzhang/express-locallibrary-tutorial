@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+                <ul class="sidebar-nav">
+                    <li> <a href="/catalog">Home</a></li>
+                    <li> <a href="/catalog/books">All books</a></li>
+                    <li> <a href="/catalog/authors">All authors</a></li>
+                    <li> <a href="/catalog/genres">All genres</a></li>
+                    <li> <a href="/catalog/bookinstances">All book-instances</a></li>
+                    <li>
+                        <hr>
+                    </li>
+                    <li> <a href="/catalog/author/create">Create new author</a></li>
+                    <li> <a href="/catalog/genre/create">Create new genre</a></li>
+                    <li> <a href="/catalog/book/create">Create new book</a></li>
+                    <li> <a href="/catalog/bookinstance/create">Create new book instance (copy)</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-10">
+                <h1><%= title %></h1>
+                <form method="post" action="">
+
+                    <div class="form-group">
+                        <label for="book">Book:</label>
+                        <select
+                            id="book"
+                            class="form-control"
+                            type="select"
+                            placeholder="Select book"
+                            name='book'
+                            required='true'
+                            >
+                            <% book_list.forEach(function(book) { %>
+                                <% if (bookinstance) {  %>
+                                    <option
+                                        value="<%= book._id %>"
+                                        selected="<%= bookinstance.book.toString() == book._id.toString() ? 'selected' : false %>">
+                                        <%= book.title %>
+                                    </option>
+                                <% } else { %>
+                                    <option value="<%= book._id %>">
+                                        <%= book.title %>
+                                    </option>
+                                <% } %>
+                            <% }) %>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imprint">Imprint:</label>
+                        <input
+                            id="imprint"
+                            class="form-control"
+                            type="text"
+                            placeholder="Publisher and date information"
+                            name="imprint"
+                            required='true'
+                            value="<%= (bookinstance ? '' : bookinstance.imprint) %>"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="due_back">Date when book available:</label>
+                        <input
+                            id="due_back"
+                            class="form-control"
+                            type="date"
+                            placeholder='dd/mm/yyyy'
+                            name="due_back"
+                            required='true'
+                            value="<%= (bookinstance ? '' : bookinstance.due_back) %>"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select
+                            id="status"
+                            class="form-control"
+                            type="select"
+                            placeholder="Select status"
+                            name='status'
+                            required='true'
+                            >
+                            <option value="可供借阅">
+                                可供借阅
+                            </option>
+                            <option value="已借出">
+                                已借出
+                            </option>
+                            <option value="馆藏维护">
+                                馆藏维护
+                            </option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">
+                        Submit
+                    </button>
+                </form>
+                <% if (errors && errors.length > 0) { %>
+                    <ul>
+                        <% errors.forEach(function(error){ %>
+                            <li>
+                                <%= error.msg %>
+                            </li>
+                        <% }) %>
+                    </ul>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

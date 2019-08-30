@@ -32,19 +32,30 @@
             </div>
             <div class="col-sm-10">
                 <h1><%= title %></h1>
-                <% if (author_list && author_list.length > 0) { %>
-                <ul>
-                    <% author_list.forEach(function(author){ %>
-                        <li>
-                            <a href="<%= author.url %>" >
-                                # <%= author.name %>
-                            </a>
-                            | (<%= author.date_of_birth_formatted %> - <%= author.date_of_death_formatted %>)
-                        </li>
-                    <% }); %>
-                </ul>
-                <% } else { %>
-                    <p>There are no authors.</p>
+                <form method="post" action="">
+                    <div class="form-group">
+                        <label for="name">Genre:</label>
+                        <input
+                            id="name"
+                            class="form-control"
+                            type="text"
+                            placeholder="Fantasy, Poetry etc."
+                            name="name"
+                            value="<%= (genre ? '' : genre.name) %>"
+                        />
+                    </div>
+                    <button class="btn btn-primary" type="submit">
+                        Submit
+                    </button>
+                </form>
+                <% if (errors && errors.length > 0) { %>
+                    <ul>
+                        <% errors.forEach(function(error){ %>
+                            <li>
+                                <%= error.msg %>
+                            </li>
+                        <% }) %>
+                    </ul>
                 <% } %>
             </div>
         </div>

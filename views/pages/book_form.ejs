@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+                <ul class="sidebar-nav">
+                    <li> <a href="/catalog">Home</a></li>
+                    <li> <a href="/catalog/books">All books</a></li>
+                    <li> <a href="/catalog/authors">All authors</a></li>
+                    <li> <a href="/catalog/genres">All genres</a></li>
+                    <li> <a href="/catalog/bookinstances">All book-instances</a></li>
+                    <li>
+                        <hr>
+                    </li>
+                    <li> <a href="/catalog/author/create">Create new author</a></li>
+                    <li> <a href="/catalog/genre/create">Create new genre</a></li>
+                    <li> <a href="/catalog/book/create">Create new book</a></li>
+                    <li> <a href="/catalog/bookinstance/create">Create new book instance (copy)</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-10">
+                <h1><%= title %></h1>
+                <form method="post" action="">
+                    <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input
+                            id="title"
+                            class="form-control"
+                            type="text"
+                            placeholder="Name of book"
+                            name="title"
+                            required='true'
+                            value="<%= (book ? '' : book.title) %>"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="author">Author:</label>
+                        <select
+                            id="author"
+                            class="form-control"
+                            type="select"
+                            placeholder="Select author"
+                            name='author'
+                            required='true'
+                            >
+                            <% authors.forEach(function(author) { %>
+                                <% if (book) {  %>
+                                    <option
+                                        value="<%= author._id %>"
+                                        selected="<%= author._id.toString() == book.author ? 'selected' : false %>">
+                                        <%= author.name %>
+                                    </option>
+                                <% } else { %>
+                                    <option value="<%= author._id %>">
+                                        <%= author.name %>
+                                    </option>
+                                <% } %>
+                            <% }) %>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="summary">Summary:</label>
+                        <input
+                            id="summary"
+                            class="form-control"
+                            type="textarea"
+                            placeholder="Summary"
+                            name="summary"
+                            required="true"
+                            value="<%= (book ? '' : book.summary) %>"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="isbn">ISBN:</label>
+                        <input
+                            id="isbn"
+                            class="form-control"
+                            type="text"
+                            placeholder="ISBN13"
+                            name="isbn"
+                            required="true"
+                            value="<%= (book ? '' : book.isbn) %>"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Genre:</label>
+                        <div>
+                            <% genres.forEach(function(genre){ %>
+                                <div style="display: inline; padding-right:10px;">
+                                    <input
+                                        class="checkbox-input"
+                                        type="checkbox"
+                                        name="genre"
+                                        id="<%= genre._id %>"
+                                        value="<%= genre._id %>"
+                                        checked="<%= genre.checked %>"
+                                    />
+                                    <label for="<%= genre._id %>">
+                                        <%= genre.name %>
+                                    </label>
+                                </div>
+                            <% }) %>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">
+                        Submit
+                    </button>
+                </form>
+                <% if (errors && errors.length > 0) { %>
+                    <ul>
+                        <% errors.forEach(function(error){ %>
+                            <li>
+                                <%= error.msg %>
+                            </li>
+                        <% }) %>
+                    </ul>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
