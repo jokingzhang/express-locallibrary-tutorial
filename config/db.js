@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 // 设置默认 mongoose 连接
 const mongoDB = 'mongodb+srv://zhangbx:123qweasd@cluster0-clrdn.mongodb.net/test?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, { useNewUrlParser: true });
+mongoose.set('useFindAndModify', false);
 // 让 mongoose 使用全局 Promise 库
 mongoose.Promise = global.Promise;
 // 取得默认连接
