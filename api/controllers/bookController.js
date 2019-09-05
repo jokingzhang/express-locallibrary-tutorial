@@ -104,8 +104,6 @@ exports.book_create_get = function(req, res, next) {
             return next(err);
         }
 
-        console.info(results.genres);
-
         res.render('pages/book_form', {
             title: 'Create Book',
             book: '',
@@ -314,9 +312,7 @@ exports.book_update_post = [
             author: req.body.author,
             summary: req.body.summary,
             isbn: req.body.isbn,
-            genre: (typeof req.body.genre === 'undefined') ?
-                [] :
-                req.body.genre,
+            genre: (typeof req.body.genre === 'undefined') ? [] : req.body.genre,
             _id: req.params.id //This is required, or a new ID will be assigned!
         });
 

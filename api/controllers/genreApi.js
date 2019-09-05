@@ -168,19 +168,20 @@ exports.genre_delete_post = (req, res, next) => {
             return next(err);
         }
 
-        console.info(results);
         // Success
         if (results.genre_books.length > 0) {
             // Author has books. Render in same way as for GET route.
             res
                 .status(400)
                 .send({ success: 'false', error: 'Genre has books' })
+            return;
         }
 
         if (!results.genre) {
             res
                 .status(404)
                 .send({ success: 'false', error: `Genre ${req.params.id} not found` })
+            return;
         }
         // Author has no books. Delete object and redirect to the list of authors.
 
@@ -236,6 +237,7 @@ exports.genre_update_post = [
                     success: 'false',
                     error: errors.array()
                 })
+            return;
         }
 
         var genre = { name: req.body.name };
@@ -251,6 +253,7 @@ exports.genre_update_post = [
                         success: 'false',
                         error: `${req.params.id} is not found`
                     })
+                return;
             }
 
             // Successful - redirect to book detail page.

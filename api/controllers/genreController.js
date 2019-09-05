@@ -1,6 +1,6 @@
 const async = require('async');
-const {body, validationResult} = require('express-validator/check');
-const {sanitizeBody} = require('express-validator/filter');
+const { body, validationResult } = require('express-validator/check');
+const { sanitizeBody } = require('express-validator/filter');
 const Genre = require('../models/genre');
 const Book = require('../models/book');
 
@@ -11,7 +11,7 @@ exports.genre_list = (req, res) => {
         .sort([
             ['name']
         ])
-        .exec(function (err, list_genres) {
+        .exec(function(err, list_genres) {
             if (err) {
                 return next(err);
             }
@@ -26,40 +26,40 @@ exports.genre_list = (req, res) => {
 // 为每一类藏书显示详细信息的页面
 exports.genre_detail = (req, res, next) => {
     async
-        .parallel({
-            genre: function (callback) {
-                Genre
-                    .findById(req.params.id)
-                    .exec(callback);
-            },
+    .parallel({
+        genre: function(callback) {
+            Genre
+                .findById(req.params.id)
+                .exec(callback);
+        },
 
-            genre_books: function (callback) {
-                Book
-                    .find({'genre': req.params.id})
-                    .exec(callback);
-            }
-        }, function (err, results) {
-            if (err) {
-                return next(err);
-            }
-            if (results.genre == null) { // No results.
-                var err = new Error('Genre not found');
-                err.status = 404;
-                return next(err);
-            }
-            // Successful, so render
-            res.render('pages/genre_detail', {
-                title: 'Genre Detail',
-                genre: results.genre,
-                genre_books: results.genre_books
-            });
+        genre_books: function(callback) {
+            Book
+                .find({ 'genre': req.params.id })
+                .exec(callback);
+        }
+    }, function(err, results) {
+        if (err) {
+            return next(err);
+        }
+        if (results.genre == null) { // No results.
+            var err = new Error('Genre not found');
+            err.status = 404;
+            return next(err);
+        }
+        // Successful, so render
+        res.render('pages/genre_detail', {
+            title: 'Genre Detail',
+            genre: results.genre,
+            genre_books: results.genre_books
         });
+    });
 };
 
 // 由 GET 显示创建藏书种类的表单
 exports.genre_create_get = (req, res, next) => {
     // 先传空值
-    res.render('pages/genre_form', {title: 'Create Genre', genre: '', errors: ''});
+    res.render('pages/genre_form', { title: 'Create Genre', genre: '', errors: '' });
 };
 
 // 由 POST 处理藏书种类创建操作
@@ -67,13 +67,13 @@ exports.genre_create_post = [
 
     // Validate that the name field is not empty.
     body('name', 'Genre name required')
-        .isLength({min: 1})
-        .trim(),
+    .isLength({ min: 1 })
+    .trim(),
 
     // Sanitize (trim and escape) the name field.
     sanitizeBody('name')
-        .trim()
-        .escape(),
+    .trim()
+    .escape(),
 
     // Process request after validation and sanitization.
     (req, res, next) => {
@@ -82,9 +82,8 @@ exports.genre_create_post = [
         const errors = validationResult(req);
 
         // Create a genre object with escaped and trimmed data.
-        var genre = new Genre({name: req.body.name});
+        var genre = new Genre({ name: req.body.name });
 
-        console.info(errors.array());
         if (!errors.isEmpty()) {
 
             // There are errors. Render the form again with sanitized values/error messages.
@@ -97,8 +96,8 @@ exports.genre_create_post = [
         } else {
             // Data from form is valid. Check if Genre with same name already exists.
             Genre
-                .findOne({'name': req.body.name})
-                .exec(function (err, found_genre) {
+                .findOne({ 'name': req.body.name })
+                .exec(function(err, found_genre) {
                     if (err) {
                         return next(err);
                     }
@@ -109,7 +108,7 @@ exports.genre_create_post = [
                     } else {
 
                         genre
-                            .save(function (err) {
+                            .save(function(err) {
                                 if (err) {
                                     return next(err);
                                 }

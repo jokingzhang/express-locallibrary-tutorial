@@ -133,7 +133,6 @@ exports.bookinstance_delete_get = (req, res) => {
 exports.bookinstance_delete_post = (req, res, next) => {
     BookInstance
         .findByIdAndRemove(req.params.id, function(err) {
-            console.info(err);
 
             if (err) {
                 res
@@ -143,6 +142,7 @@ exports.bookinstance_delete_post = (req, res, next) => {
                         error: `${req.params.id} is not found`,
                         ...err
                     })
+                return;
             }
             // Success - go to author list
             res
@@ -217,6 +217,7 @@ exports.bookinstance_update_post = [
                             error: `${req.params.id} is not found`,
                             ...err
                         })
+                    return;
                 }
                 // Successful - redirect to book detail page.
                 res
