@@ -1,4 +1,4 @@
-export const HOST = ['http://localhost:5002/api', 'http://accept.tigerfintech.com/api'];
+export const HOST = ['http://localhost:5001/api', 'http://api.jokingzhang.com/demo-library'];
 
 export const API = {
     home: {
