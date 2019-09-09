@@ -71,7 +71,6 @@ axios.interceptors.request.use((config: AxiosRequestConfig) => {
         config.timeout = 60 * 1000;
     }
 
-    
     // 增加对表单数组提交的支持
     if (!config.useJson && (config.method === 'post' || config.method === 'put')) {
         config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
