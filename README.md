@@ -8,7 +8,7 @@
 
 就是上面 Demo 中的内容
 
-- [x] 登录功能
+- [x] 登录功能 (admin|password)
 - [x] 首页
 - [x] 书籍 CRUD
 - [x] 作者 CRUD
