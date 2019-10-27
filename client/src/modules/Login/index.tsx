@@ -12,19 +12,6 @@ interface IProps extends FormComponentProps {
   className?: string;
 }
 
-// const apiGetList = () =>
-//   new Promise((resolve, reject) => {
-//     http
-//       .get(API.Auth.login())
-//       .then(resp => {
-//         resolve(resp.data);
-//       })
-//       .catch(error => {
-//         message.error(error.message);
-//         reject(error.message);
-//       });
-//   });
-
 const Login = (props: IProps & RouteComponentProps) => {
   // const {loading, value, error} = useAsync < any > (apiGetList);
   const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = props.form;

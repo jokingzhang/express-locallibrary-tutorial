@@ -93,7 +93,7 @@ axios.interceptors.request.use((config: AxiosRequestConfig) => {
 axios.interceptors.response.use(
   (response: AxiosResponse) => {
     let data = response.data;
-    console.info(response);
+    // console.info(response);
 
     if (data && typeof data === "object") {
       if (data.success === "true") {
@@ -104,7 +104,7 @@ axios.interceptors.response.use(
     return response;
   },
   error => {
-    console.info(error);
+    // console.info(error);
     if (error.response.status === 401) {
       //place your reentry code
 
