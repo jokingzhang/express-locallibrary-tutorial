@@ -6,8 +6,12 @@ const book_api = require('../controllers/bookApi');
 const author_api = require('../controllers/authorApi');
 const genre_api = require('../controllers/genreApi');
 const book_instance_api = require('../controllers/bookinstanceApi');
+const auth_api = require('../controllers/authApi');
 
 /// 藏书路由 ///
+
+// POST 登录接口
+router.post('/login', auth_api.login)
 
 // GET 获取藏书编目主页
 router.get('/home', book_api.home);

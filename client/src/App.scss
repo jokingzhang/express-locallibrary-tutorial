@@ -39,6 +39,9 @@ body {
 .l-menu {
     line-height: 64px;
     text-align: left;
+    .ant-dropdown-link {
+        float: right;
+    }
 }
 
 .l-footer {
