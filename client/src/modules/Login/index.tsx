@@ -23,6 +23,7 @@ const Login = (props: IProps & RouteComponentProps) => {
         try {
           const resp = await http.post(API.Auth.login(), values, { useJson: true });
           message.success("登录成功");
+
           dispatch({
             type: "LOGIN",
             payload: {
