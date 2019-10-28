@@ -23,10 +23,10 @@
 │   ├── controllers     - 业务逻辑，包含模板渲染业务逻辑，以及API改写之后的业务逻辑
 │   ├── models          - 数据库模型目录
 │   ├── routes          - 路由目录
-│   ├── store           - 存放 Context API
 │   └── views           - 渲染模板逻辑
 ├── client              - 前端代码目录
 │   ├── src
+│   │   ├── store       - 存放 Context API，全局共享数据
 |   │   ├── modules     - 业务组件目录
 |   │   ├── components  - 公共组件目录
 |   │   └── utils       - 工具类方法函数目录
